@@ -1,12 +1,12 @@
-# 1. Build Stage using Eclipse Temurin (Java 17)
+# 1. Build Stage using Eclipse Temurin (Modern & Reliable)
 FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY . .
-RUN mvn clean package -DskipTests
+RUN cd api && mvn clean package -DskipTests
 
-# 2. Run Stage using Eclipse Temurin (Java 17)
+# 2. Run Stage using Eclipse Temurin
 FROM eclipse-temurin:17-jdk-jammy
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /app/api/target/*.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
