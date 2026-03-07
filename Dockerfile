@@ -1,10 +1,10 @@
-# 1. Build Stage using Eclipse Temurin
+# 1. Build Stage using Eclipse Temurin (Java 17)
 FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY . .
 RUN mvn clean package -DskipTests
 
-# 2. Run Stage using Eclipse Temurin
+# 2. Run Stage using Eclipse Temurin (Java 17)
 FROM eclipse-temurin:17-jdk-jammy
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
